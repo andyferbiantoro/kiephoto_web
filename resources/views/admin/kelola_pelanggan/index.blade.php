@@ -89,7 +89,7 @@ Kelola Pelanggan
     <div class="modal-body">
       {{ csrf_field() }}
       {{ method_field('POST') }}
-      <p>Apakah anda yakin ingin menghapus data wali nikah pelanggan ini ?</p>
+      <p>Apakah anda yakin ingin menghapus data pelanggan ini ?</p>
       <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
       <button type="submit" name="" class="btn btn-danger float-right mr-2" data-dismiss="modal" onclick="formSubmit()">Hapus</button>
   </div>

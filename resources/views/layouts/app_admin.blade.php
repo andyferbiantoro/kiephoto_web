@@ -46,32 +46,35 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern dark-layout  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="" data-layout="dark-layout">
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 
     <!-- BEGIN: Header-->
-    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-dark navbar-shadow">
-         @include('partials.topnav')
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow">
+        @include('partials.topnav_admin')
     </nav>
+    
     
     <!-- END: Header-->
 
 
     <!-- BEGIN: Main Menu-->
-    <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="html/ltr/vertical-menu-template-dark/index.html"><span class="brand-logo">
-                          </span>
-                        <h2 class="brand-text">Vuexy</h2>
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="#"><span class="brand-logo">
+                            </span>
+                           
+                            <img src="app-assets//images/portrait/small/logo.jpg"  
+                                 height="40px" 
+                                 ><br>
+                      
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
             </ul>
         </div>
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
-<!-- sidebar -->
-             @include('partials.sidebar')
-
+            @include('partials.sidebar')
         </div>
     </div>
     <!-- END: Main Menu-->
@@ -87,12 +90,7 @@
                 <!-- Dashboard Analytics Start -->
                 <section id="dashboard-analytics">
                     @yield('content')
-                    
-
-                    
-
-                   
-                   
+                    <!--/ List DataTable -->
                 </section>
                 <!-- Dashboard Analytics end -->
 
@@ -105,7 +103,9 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-   
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
 
@@ -115,7 +115,7 @@
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <!-- <script src="app-assets/vendors/js/charts/apexcharts.min.js"></script> -->
+    <script src="app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="app-assets/vendors/js/extensions/toastr.min.js"></script>
     <script src="app-assets/vendors/js/extensions/moment.min.js"></script>
     <script src="app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
@@ -135,7 +135,7 @@
     <script src="app-assets/js/scripts/pages/app-invoice-list.js"></script>
     <!-- END: Page JS-->
 
-    <script>
+     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable();
         });

@@ -10,60 +10,79 @@ Dashboard Admin
 
  <div class="row match-height">
                         <!-- Greetings Card starts -->
-                        <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="col-12">
                             <div class="card card-congratulations">
                                 <div class="card-body text-center">
-                                    <img src="app-assets/images/elements/decore-left.png" class="congratulations-img-left" alt="card-img-left" />
-                                    <img src="app-assets/images/elements/decore-right.png" class="congratulations-img-right" alt="card-img-right" />
-                                    <div class="avatar avatar-xl bg-primary shadow">
-                                        <div class="avatar-content">
-                                            <i data-feather="award" class="font-large-1"></i>
-                                        </div>
-                                    </div>
+                                  
+                                    
                                     <div class="text-center">
-                                        <h1 class="mb-1 text-white">Congratulations John,</h1>
-                                        <p class="card-text m-auto w-75">
-                                            You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
-                                        </p>
+                                     <div class="panel">
+                                        <div id="chartpelanggan"></div>                                
+                                  </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Greetings Card ends -->
-
-                        <!-- Subscribers Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">92.6k</h2>
-                                    <p class="card-text">Subscribers Gained</p>
-                                </div>
-                                <div id="gained-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Subscribers Chart Card ends -->
-
-                        <!-- Orders Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">38.4K</h2>
-                                    <p class="card-text">Orders Received</p>
-                                </div>
-                                <div id="order-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Orders Chart Card ends -->
+                       
                     </div>
 
-@endsection                    
+@endsection   
+
+@section('scripts')
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript">
+  Highcharts.chart('chartpelanggan', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Grafik Pemesanan Tahun Ini'
+    },
+    subtitle: {
+      text: 'KIEPHOTO'
+    },
+    xAxis: {
+      categories: [
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember',
+      ],
+      crosshair: true
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Banyak Pemesanan'
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+      pointFormat: 
+      '<td style="padding:0"><b>{point.y}Pemesanan</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
+      }
+    },
+    series: [{
+      name: 'Bulan',
+      data: [{{$januari}},{{$februari}},{{$maret}},{{$april}},{{$mei}},{{$juni}},{{$juli}},{{$agustus}},{{$september}},{{$oktober}},{{$november}},{{$desember}}]
+
+    }]
+  });
+</script>
+@endsection                 

@@ -17,8 +17,8 @@ class CreatePemesananTable extends Migration
             $table->id();
             $table->integer('id_pelanggan');
             $table->integer('id_tipe_paket');
-            $table->integer('id_paket');
             $table->string('kode_pemesanan');
+            $table->date('tanggal_pemesanan');
             $table->string('status_pemesanan');
             $table->integer('jumlah_orang');
             $table->integer('jumlah_pose_pemesanan');

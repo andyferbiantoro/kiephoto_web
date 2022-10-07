@@ -8,7 +8,7 @@
                     <a class="d-flex align-items-center" href="{{ route('admin_kelola_pelanggan') }}"><i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Pelanggan</span></a>
                 </li>
 
-                <li class="nav-item {{(request()->is('admin_kelola_paket')) || (request()->is('admin_detail_paket')) ? 'active' : ''}} ">
+                <li class="nav-item {{(request()->is('admin_kelola_paket')) ? 'active' : ''}} ">
                     <a class="d-flex align-items-center" href="{{ route('admin_kelola_paket') }}"><i data-feather="copy"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Paket</span></a>
                 </li>
 
@@ -24,12 +24,16 @@
                     <a class="d-flex align-items-center" href="{{ route('admin_kelola_laporan_transaksi') }}"><i data-feather="file"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Laporan Transaksi</span></a>
                 </li>
 
-                <li class="nav-item {{(request()->is('admin_kelola_pengaturan')) ? 'active' : ''}}">
+                <!-- <li class="nav-item {{(request()->is('admin_kelola_pengaturan')) ? 'active' : ''}}">
                     <a class="d-flex align-items-center" href="{{ route('admin_kelola_pengaturan') }}"><i data-feather="settings"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Pengaturan</span></a>
+                </li> -->
+
+                <li class="nav-item {{(request()->is('admin_ubah_password')) ? 'active' : ''}}">
+                    <a class="d-flex align-items-center" href="{{ route('admin_ubah_password') }}"><i data-feather="key"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Ubah Password</span></a>
                 </li>
 
-                <li class="nav-item ">
-                    <a class="d-flex align-items-center" href="{{ route('admin_kelola_pelanggan') }}"><i data-feather="key"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Ubah Password</span></a>
+                <li class="nav-item {{(request()->is('logout-admin')) ? 'active' : ''}}">
+                    <a class="d-flex align-items-center" href="{{ route('logout-admin') }}"><i data-feather="log-out"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Logout</span></a>
                 </li>
 
 

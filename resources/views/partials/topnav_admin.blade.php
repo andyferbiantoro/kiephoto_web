@@ -1,19 +1,23 @@
-<nav class="header-navbar navbar-expand-lg navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center" data-nav="brand-center">
-        <div class="navbar-header d-xl-block d-none">
+<div class="navbar-header d-xl-block d-none">
             <ul class="nav navbar-nav">
-                <li class="nav-item"><a class="navbar-brand" href="#"><span class="brand-logo">
-                            </span>
-                            <img src="app-assets//images/portrait/small/logo.jpg"  
-                                 height="40px" 
-                                 ><br>
+                <li class="nav-item"><a class="navbar-brand" href="html/ltr/horizontal-menu-template-dark/index.html"><span class="brand-logo">
+                            
+                        
                         
                     </a></li>
+                        
+                       
             </ul>
         </div>
         <div class="navbar-container d-flex content">
-            
-            <ul class="nav navbar-nav align-items-center ml-auto">
+            <div class="bookmark-wrapper d-flex align-items-center">
+                <ul class="nav navbar-nav d-xl-none">
+                    <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
+                </ul>
                
+            </div>
+            <ul class="nav navbar-nav align-items-center ml-auto">
+                
                 <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="sun"></i></a></li>
                
                 
@@ -33,12 +37,5 @@
                     </div>
                 </li>
                 @endauth
-
-                @guest
-                <a class="btn btn-primary ml-50" href="{{ route('login') }}">
-                    <i class="mr-50" data-feather="log-in"></i> Login
-                </a>
-                @endguest
             </ul>
         </div>
-    </nav>

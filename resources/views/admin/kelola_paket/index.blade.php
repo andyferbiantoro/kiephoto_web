@@ -13,7 +13,16 @@ Kelola Paket
     <div class="col-12">
         <div class="card">
             <div class="card-body text-center">
-
+                 @if (session('success'))
+                <div class="alert alert-success">
+                  {{ session('success') }}
+                </div>
+                @endif
+                @if (session('error'))
+                <div class="alert alert-danger">
+                  {{ session('error') }}
+                </div>
+                @endif
                 <div class="text-center">
                     <h3 class="mb-1">KELOLA PAKET FOTO</h3><br>
                     <div class="text-left">    
@@ -137,6 +146,34 @@ Kelola Paket
         </form>
       </div>
     </div>
+
+
+
+
+<!-- Modal konfirmasi Hapus -->
+<div id="DeleteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog ">
+    <!-- Modal content-->
+    <form action="" id="deleteForm" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Hapus Data Paket</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      {{ csrf_field() }}
+      {{ method_field('POST') }}
+      <p>Apakah anda yakin ingin menghapus data paket ini ?</p>
+      <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Batal</button>
+      <button type="submit" name="" class="btn btn-danger float-right mr-2" data-dismiss="modal" onclick="formSubmit()">Hapus</button>
+  </div>
+</div>
+</form>
+</div>
+</div> 
+
 
 
 

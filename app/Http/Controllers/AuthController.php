@@ -29,7 +29,7 @@ class AuthController extends Controller
         	if(auth()->user()->role == "admin"){
         		return redirect()->route('admin_index')->with('success', 'Anda Berhasil Login');
         	}else if(auth()->user()->role == "pelanggan"){
-        		return redirect()->route('pelanggan_pemesanan')->with('success', 'Anda Berhasil Login');
+        		return redirect()->route('dashboard')->with('success', 'Anda Berhasil Login');
         	}
         }else {
             return redirect()->back()->with('error', 'Email / Password anda salah'); //route itu isinya name dari route di web.php

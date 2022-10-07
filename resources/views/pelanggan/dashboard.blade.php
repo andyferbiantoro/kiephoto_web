@@ -9,104 +9,80 @@ Dashboard
 
 
 
+<div class="col-12">
 
+    @if (session('success'))
+    <div class="alert alert-success text-center">
+      {{ session('success') }}
+  </div>
+  @endif
+  @if (session('error'))
+  <div class="alert alert-danger text-center">
+      {{ session('error') }}
+  </div>
+  @endif
+</div>
 <div class="row match-height">
-                       
 
-                        <!-- Subscribers Chart Card starts -->
-                         <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">92.6k</h2>
-                                    <p class="card-text">Subscribers Gained</p>
-                                </div>
-                                <div id="gained-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Subscribers Chart Card ends -->
-
-                        <!-- Orders Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">38.4K</h2>
-                                    <p class="card-text">Orders Received</p>
-                                </div>
-                                <div id="order-chart"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">92.6k</h2>
-                                    <p class="card-text">Subscribers Gained</p>
-                                </div>
-                                <div id="gained-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Subscribers Chart Card ends -->
-
-                        <!-- Orders Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">38.4K</h2>
-                                    <p class="card-text">Orders Received</p>
-                                </div>
-                                <div id="order-chart"></div>
-                            </div>
-                        </div>
-
-
-
-                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
-                                        </div>
-                                    </div>
-                                    <h2 class="font-weight-bolder mt-1">38.4K</h2>
-                                    <p class="card-text">Orders Received</p>
-                                </div>
-                                <div id="order-chart"></div>
-                            </div>
-                        </div>
-                        <!-- Orders Chart Card ends -->
+    @foreach($paket as $data)
+    <div class="col-lg-3 col-sm-6 col-12">
+        <div class="card ecommerce-card">
+            <div class="item-img text-center">
+                <img class="img-fluid card-img-top" src="{{asset('uploads/foto_paket/'.$data->foto_paket)}}" alt="img-placeholder" />
+            </div>
+            <div class="card-header flex-column align-items-start pb-0">
+                <div class="item-wrapper">
+                    <div class="text-center">
+                        <h6 class="item-price text-center"><b>{{$data->nama_paket}}</b></h6>
                     </div>
+                </div>
+            </div><br>
+            <div class="card-body">
+                <div class="text-center">
+                    <a href="{{ route('tipe_paket',$data->id) }}"><button class="btn btn-primary btn-lg">Lihat Detail</button></a>
+                </div>
+            </div>
 
-                    
+        </div>
+    </div>
+    @endforeach
 
-                    
 
-                    <!-- List DataTable -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card invoice-list-wrapper">
-                               
-                            </div>
-                        </div>
+    <!-- alamat -->
+    <div class="col-12">
+        <div class="card ecommerce-card">
+            <div class="item-img text-center"><br>
+                <h3 class="item-price text-center text-primary"><b>ALAMAT</b></h3><br>
+
+            </div>
+            <div class="card-header flex-column align-items-start pb-0">
+                <div class="item-wrapper">
+                    <div class="text-center">
+
                     </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="item-wrapper">
+                    <div class="text-center">
+                       <div class="text-center">
+
+                           <p>
+                             Jalan ikan kembang waru, Karangrejo, Banyuwangi<br>
+                         </p>
+
+                     </div>
+                 </div>
+                 <hr>
+                 <div class="text-center">
+                    <h4 class="item-price text-center text-primary"><b>Email</b></h4><br>
+                    <p>
+                        kiephoto@gmail.com
+                    </p>
+
+                </div><br>
+            </div>   
+        </div>
+    </div>
+</div>
 @endsection
