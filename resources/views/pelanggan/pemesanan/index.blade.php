@@ -87,12 +87,16 @@ Pemesanan
 
                         <div class="form-group">
                             <label>Metode Pembayaran</label>
-                            <select type="text" class="form-control" id="metode_pembayaran" name="metode_pembayaran" required="">
+                            <select type="text" class="form-control" id="metode_pembayaran" name="metode_pembayaran" required="" onchange="MetodePembayaranFunction()">
                                 <option selected value=""> -- Pilih Metode Pembayaran -- </option>
                                 <option value="Transfer">Transfer</option>
                                 <option value="Tunai">Tunai</option>
                             </select><br>
                         </div>
+
+                       <!--  <div class="form-group">
+                            <input type="text" class="form-control" id="jenis_pembayaran_tunai" name="jenis_pembayaran" disabled="" readonly=""  value="Lunas"></input>
+                        </div> -->
 
 
                         <div class="form-group">
@@ -105,7 +109,7 @@ Pemesanan
                         </div>
 
                         <div class="form-group">
-                            <label for="nominal_dp">Nominal DP (Jika pembayaran DP)</label>
+                            <label for="nominal_dp">Nominal DP (Minimal DP Rp. <?=number_format($data->min_dp, 0, ".", ".")?>,00)</label>
                             <input type="number" class="form-control" min="{{$data->min_dp}}" id="nominal_dp" disabled="" name="nominal_dp" required=""></input>
                         </div>
 
@@ -156,6 +160,19 @@ Pemesanan
 
            }else{
             nominal_dp.setAttribute("disabled", "");
+        }
+    }
+
+     function MetodePembayaranFunction(){
+            var metode_pembayaran = document.getElementById("metode_pembayaran").value;
+            var jenis_pembayaran = document.querySelector("#jenis_pembayaran");
+           
+
+
+            if(metode_pembayaran == "Tunai"){    
+               document.getElementById("jenis_pembayaran").selectedIndex = "2";
+           }else{
+            document.getElementById("jenis_pembayaran").selectedIndex = "0";
         }
     }
 </script>

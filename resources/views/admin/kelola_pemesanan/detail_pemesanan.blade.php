@@ -87,31 +87,47 @@ Detail Pemesanan
               </tr> 
             </table><br>
 
-             @if($data->jenis_pembayaran == 'DP' && $data->status_pemesanan == 'Menunggu Konfirmasi')
-              <b class="text-danger">Pembayaran belum dikonfirmasi, silahkan periksa detail pembayaran</b><br>
+             @if($data->status_pemesanan == 'Menunggu Konfirmasi')
+              <b class="text-danger">Pembayaran belum dikonfirmasi, silahkan periksa detail pembayaran</b><br><br>
             @endif 
 
-            @if($data->jenis_pembayaran == 'DP' && $data->status_pemesanan == 'DP')
+           <!--  @if($data->jenis_pembayaran == 'DP' && $data->status_pemesanan == 'DP')
               <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ModalLunas">
                 Lunasi
               </button><br>
-            @endif 
+            @endif  -->
 
             @if($data->jenis_pembayaran == 'Lunas' && $data->status_pemesanan == 'Lunas' )
               <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalSelesai">
                 Selesaikan Sesi
-              </button><br>
+              </button><br><br>
             @endif
 
-            @if($data->status_pemesanan == 'Selesai' )
+            @if($data->jenis_pembayaran == 'DP' && $data->status_pemesanan == 'DP' )
+              <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ModalSelesai">
+                Selesaikan Sesi
+              </button><br><br>
+            @endif
+
+            @if($data->status_pemesanan == 'Selesai' && $data->jenis_pembayaran == 'DP' )
               <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ModalDiambil">
+               Lunasi Pembayaran dan Konfirmasi Diambil
+              </button><br><br>
+            @endif 
+
+            @if($data->status_pemesanan == 'Selesai' && $data->jenis_pembayaran == 'Lunas' )
+              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ModalDiambil">
                Diambil
-              </button><br>
+              </button><br><br>
             @endif  
 
             @if($data->status_pemesanan == 'Diambil' )
-              <b class="text-primary">Sesi Selesai dan Foto Telah Diambil Oleh Pelanggan</b><br>
+              <b class="text-primary">Sesi Selesai dan Foto Telah Diambil Oleh Pelanggan</b><br><br>
             @endif  
+
+            <a href="{{ route('admin_kelola_pemesanan') }}"><button type="button" class="btn btn-danger btn-sm">
+             Kambali
+           </button></a><br>
           </div>
         </div>
       </div>
@@ -195,6 +211,13 @@ Detail Pemesanan
      <form method="post" action="{{route('admin_foto_diambil', $lunas->id )}}" enctype="multipart/form-data">
 
         {{csrf_field()}}
+
+        @if($lunas->jenis_pembayaran == 'DP')
+        <div class="form-group">
+            <label for="sisa_bayar">Sisa Tagihan</label>
+            <input type="text" class="form-control" id="sisa_bayar" name="sisa_bayar"  readonly="" required="" value="{{$lunas->sisa_bayar}}"></input>
+        </div>
+        @endif
 
     </div>
     <div class="modal-footer">

@@ -90,7 +90,7 @@ Kelola Portofolio
         {{csrf_field()}}
 
         <div class="form-group">
-            <label>Lapangan</label>
+            <label>Paket</label>
             <select type="text" class="form-control" id="id_paket" name="id_paket" required>
                 <option selected value=""> -- Pilih Paket -- </option>
                 @foreach($paket as $data)

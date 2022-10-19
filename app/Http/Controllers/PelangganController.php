@@ -38,6 +38,7 @@ class PelangganController extends Controller
 		$tipe_paket = DB::table('tipe_paket')
 		->join('paket' , 'tipe_paket.id_paket', '=' , 'paket.id')
 		->select('tipe_paket.*','paket.nama_paket')
+		->where('tipe_paket.id', $id)
 		->get();
 		
 		$pelanggan = Pelanggan::where('id_user', Auth::user()->id)->first();
@@ -55,36 +56,66 @@ class PelangganController extends Controller
 		//$kode = Str::random(5);  
 		$kode = mt_rand(1000, 9999);
 
-		$data = ([
-			'id_pelanggan' => $request['id_pelanggan'],
-			'id_tipe_paket' => $request['id_tipe_paket'],
-			'kode_pemesanan' => 'RF-'.$kode,
-			'tanggal_pemesanan' => $request['tanggal_pemesanan'],
-			'status_pemesanan' => $request['status_pemesanan']="Pending",
-			'jumlah_orang' => $request['jumlah_orang'],
-			'jumlah_pose_pemesanan' => $request['jumlah_pose_pemesanan'],
-			'jumlah_file_pemesanan' => $request['jumlah_file_pemesanan'],
-			'metode_pembayaran' => $request['metode_pembayaran'],
-			'jenis_pembayaran' => $request['jenis_pembayaran'],
-			'nominal_dp' => $request['nominal_dp'],
-			'total_bayar' => $request['total_bayar'],
+		if ($request->input('metode_pembayaran') == 'Transfer') {
+			# code...
+			$data = ([
+				'id_pelanggan' => $request['id_pelanggan'],
+				'id_tipe_paket' => $request['id_tipe_paket'],
+				'kode_pemesanan' => 'RF-'.$kode,
+				'tanggal_pemesanan' => $request['tanggal_pemesanan'],
+				'status_pemesanan' => $request['status_pemesanan']="Pending",
+				'jumlah_orang' => $request['jumlah_orang'],
+				'jumlah_pose_pemesanan' => $request['jumlah_pose_pemesanan'],
+				'jumlah_file_pemesanan' => $request['jumlah_file_pemesanan'],
+				'metode_pembayaran' => $request['metode_pembayaran'],
+				'jenis_pembayaran' => $request['jenis_pembayaran'],
+				'nominal_dp' => $request['nominal_dp'],
+				'total_bayar' => $request['total_bayar'],
 
-		]);
+			]);
 
 		// return $data;
 
-		$lastid = Pemesanan::create($data)->id;
+			$lastid = Pemesanan::create($data)->id;
 
-		$cek_pemesanan = Pemesanan::where('id', $lastid)->first();
+			$cek_pemesanan = Pemesanan::where('id', $lastid)->first();
 
-		if ($cek_pemesanan->jenis_pembayaran == 'DP') {
+			if ($cek_pemesanan->jenis_pembayaran == 'DP') {
     		# code...
-			$sisa_bayar = $cek_pemesanan->total_bayar - $cek_pemesanan->nominal_dp;
-			$input = [
-				'sisa_bayar' => $sisa_bayar,
-			];
+				$sisa_bayar = $cek_pemesanan->total_bayar - $cek_pemesanan->nominal_dp;
+				$input = [
+					'sisa_bayar' => $sisa_bayar,
+				];
 
-			$cek_pemesanan->update($input);
+				$cek_pemesanan->update($input);
+			}
+		}elseif($request->input('metode_pembayaran') == 'Tunai'){
+			$data = ([
+				'id_pelanggan' => $request['id_pelanggan'],
+				'id_tipe_paket' => $request['id_tipe_paket'],
+				'kode_pemesanan' => 'RF-'.$kode,
+				'tanggal_pemesanan' => $request['tanggal_pemesanan'],
+				'status_pemesanan' => 'Menunggu Konfirmasi',
+				'jumlah_orang' => $request['jumlah_orang'],
+				'jumlah_pose_pemesanan' => $request['jumlah_pose_pemesanan'],
+				'jumlah_file_pemesanan' => $request['jumlah_file_pemesanan'],
+				'metode_pembayaran' => $request['metode_pembayaran'],
+				'jenis_pembayaran' => $request['jenis_pembayaran'],
+				'nominal_dp' => $request['nominal_dp'],
+				'total_bayar' => $request['total_bayar'],
+
+			]);
+
+			$lastid = Pemesanan::create($data)->id;
+
+			$data_add = new Pembayaran();
+
+			$data_add->id_pemesanan = $lastid;
+			$data_add->tanggal_bayar = $request->input('tanggal_pemesanan');
+			$data_add->status_pembayaran = 'Menunggu Konfirmasi';
+
+
+			$data_add->save();
 		}
 
 		$pemesanan_mail = Pemesanan::where('id', $lastid)->first();
@@ -204,6 +235,7 @@ class PelangganController extends Controller
 		return view('pelanggan.paket.index',compact('paket'));
 	}
 
+
 	public function tipe_paket($id_paket){
 		$tipe_paket = Tipe_Paket::where('id_paket', $id_paket)->orderby('id','DESC')->get();
 		
@@ -211,11 +243,13 @@ class PelangganController extends Controller
 		return view('pelanggan.paket.tipe_paket',compact('tipe_paket'));
 	}
 
+
 	public function tentang(){
 		$Portofolio = Portofolio::orderby('id','DESC')->get();
 
 		return view('pelanggan.tentang.index',compact('Portofolio'));
 	}
+
 
 	public function panduan(){
 

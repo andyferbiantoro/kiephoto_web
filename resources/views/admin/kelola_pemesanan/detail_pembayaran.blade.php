@@ -25,7 +25,11 @@ Detail Pembayaran
       @endif
       <div class="text-center">
         <h3 class="mb-1 text-primary">DETAIL PEMBAYARAN</h3><br>
-
+        <div class="text-left">
+          <a href="{{ route('admin_kelola_pemesanan') }}"><button type="button" class="btn btn-danger btn-sm">
+             Kambali
+           </button></a><br>
+        </div>
         <div class="table-responsive">
           <table id="dataTable" class="table table-striped" style="width:100%">
             <thead>
@@ -51,18 +55,30 @@ Detail Pembayaran
               <td>{{$no++}}</td>
               <td>{{$data->nama_lengkap }}</td>
               <td>{{date("j F Y", strtotime($data->tanggal_bayar))}}</td>
-              <td>{{$data->nama_rekening }}</td>
-              <td>{{$data->no_rekening }}</td>
-              <td>{{$data->nama_bank }}</td>
+              @if($data->metode_pembayaran == 'Transfer')
+                  <td>{{$data->nama_rekening }}</td>
+                  <td>{{$data->no_rekening }}</td>
+                  <td>{{$data->nama_bank }}</td>
+              @elseif($data->metode_pembayaran == 'Tunai')
+                  <td><b class="text-primary">Pembayaran Tunai</b></td>
+                  <td><b class="text-primary">Pembayaran Tunai</b></td>
+                  <td><b class="text-primary">Pembayaran Tunai</b></td>
+              @endif    
               @if($data->jenis_pembayaran == 'DP')
               <td>Rp. <?=number_format($data->nominal_dp, 0, ".", ".")?>,00</td>
               @elseif($data->jenis_pembayaran == 'Lunas')
               <td>Rp. <?=number_format($data->total_bayar, 0, ".", ".")?>,00</td>
               @endif
               <td>{{$data->jenis_pembayaran }}</td>
-              <td>
-                <img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/foto_bukti_bayar/'.$data->foto_bukti_bayar)}}"  data-toggle="modal" data-target="#myModal"></img>
-              </td>
+              @if($data->metode_pembayaran == 'Transfer')
+                <td>
+                  <img style="border-radius: 0%" height="70" id="ImageTampil" src="{{asset('uploads/foto_bukti_bayar/'.$data->foto_bukti_bayar)}}"  data-toggle="modal" data-target="#myModal"></img>
+                </td>
+                @elseif($data->metode_pembayaran == 'Tunai')
+                <td>
+                  <b class="text-primary">Pembayaran Tunai</b>
+                </td>
+              @endif
 
 
               <td>

@@ -24,18 +24,18 @@ class AdminController extends Controller
 	public function index(){
 
 		$year = Carbon::now()->format('Y');
-		$januari = Pemesanan::whereMonth('created_at',1)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$februari = Pemesanan::whereMonth('created_at',2)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$maret = Pemesanan::whereMonth('created_at',3)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$april = Pemesanan::whereMonth('created_at',4)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$mei = Pemesanan::whereMonth('created_at',5)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$juni = Pemesanan::whereMonth('created_at',6)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$juli = Pemesanan::whereMonth('created_at',7)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$agustus = Pemesanan::whereMonth('created_at',8)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$september = Pemesanan::whereMonth('created_at',9)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$oktober = Pemesanan::whereMonth('created_at',10)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$november = Pemesanan::whereMonth('created_at',11)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
-		$desember = Pemesanan::whereMonth('created_at',12)->whereYear('created_at', $year)->where('status_pemesanan','Selesai')->count();
+		$januari = Pemesanan::whereMonth('created_at',1)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$februari = Pemesanan::whereMonth('created_at',2)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$maret = Pemesanan::whereMonth('created_at',3)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$april = Pemesanan::whereMonth('created_at',4)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$mei = Pemesanan::whereMonth('created_at',5)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$juni = Pemesanan::whereMonth('created_at',6)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$juli = Pemesanan::whereMonth('created_at',7)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$agustus = Pemesanan::whereMonth('created_at',8)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$september = Pemesanan::whereMonth('created_at',9)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$oktober = Pemesanan::whereMonth('created_at',10)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$november = Pemesanan::whereMonth('created_at',11)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
+		$desember = Pemesanan::whereMonth('created_at',12)->whereYear('created_at', $year)->where('status_pemesanan','Diambil')->count();
 
 		return view('admin.index',compact('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember'));
 	}
@@ -319,6 +319,7 @@ class AdminController extends Controller
 		->join('paket' , 'tipe_paket.id_paket', '=' , 'paket.id')
 		->select('pemesanan.*','pelanggan.nama_lengkap','tipe_paket.nama_tipe_paket','tipe_paket.jumlah_orang','tipe_paket.jumlah_pose','tipe_paket.jumlah_file','tipe_paket.harga_tipe_paket','paket.nama_paket')
 		->orderBy('pemesanan.id','DESC')
+		->where('pemesanan.id', $id)
 		->get();
 
 		return view('admin.kelola_pemesanan.detail_pemesanan',compact('pemesanan'));
@@ -329,8 +330,9 @@ class AdminController extends Controller
 		$pembayaran = DB::table('pembayaran')
 		->join('pemesanan' , 'pembayaran.id_pemesanan', '=' , 'pemesanan.id')
 		->join('pelanggan' , 'pemesanan.id_pelanggan', '=' , 'pelanggan.id')
-		->select('pembayaran.*','pelanggan.nama_lengkap','pemesanan.nominal_dp','pemesanan.total_bayar','pemesanan.jenis_pembayaran')
+		->select('pembayaran.*','pelanggan.nama_lengkap','pemesanan.nominal_dp','pemesanan.total_bayar','pemesanan.jenis_pembayaran','pemesanan.metode_pembayaran')
 		->orderBy('pembayaran.id','DESC')
+		->where('pembayaran.id_pemesanan', $id_pemesanan)
 		->get();
 
 		return view('admin.kelola_pemesanan.detail_pembayaran',compact('pembayaran'));
@@ -474,10 +476,22 @@ class AdminController extends Controller
 
 	public function admin_foto_diambil(Request $request,$id)
 	{
+
+		// $status_bayar = Pemesanan::where('id',$id)->first();
+
+		// $input = [
+		// 	'sisa_bayar' => $status_bayar->sisa_bayar - $request['sisa_bayar'],
+		// 	'jenis_pembayaran' =>'Lunas',
+		// 	'status_pemesanan' =>'Lunas',
+		// ];
+		// $status_bayar->update($input);
+
 		$status_pesan = Pemesanan::where('id',$id)->first();
 
 		$input = [
-			'status_pemesanan' =>'Diambil'
+			'jenis_pembayaran' =>'Lunas',
+			'status_pemesanan' =>'Diambil',
+			'sisa_bayar' => $status_pesan->sisa_bayar - $request['sisa_bayar'],
 		];
 		$status_pesan->update($input);
 
